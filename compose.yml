@@ -3,29 +3,32 @@ version: "3.8"
 services:
   postgres:
     image: postgres:15
-    restart: unless-stopped
+    restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_USER: n8n
+      POSTGRES_PASSWORD: n8n
       POSTGRES_DB: n8n
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   n8n:
-    image: n8nio/n8n:1.85.4
-    restart: unless-stopped
+    image: docker.n8n.io/n8nio/n8n:1.85.4
+    restart: always
     ports:
       - "5678:5678"
     environment:
-      # Configuração do banco
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
       - DB_POSTGRESDB_PORT=5432
       - DB_POSTGRESDB_DATABASE=n8n
-      - DB_POSTGRESDB_USER=postgres
-      - DB_POSTGRESDB_PASSWORD=postgres_password
-      # Pasta para custom nodes
-      - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=n8n
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+    volumes:
+      - n8n_data:/home/node/.n8n
     depends_on:
       - postgres
 

@@ -18,14 +18,14 @@ export class Random implements INodeType {
       {
         displayName: 'Min',
         name: 'min',
-        type: 'number', //somente númeors
+        type: 'number', //somente números
         default: 1,
         description: 'Número inteiro mínimo',
       },
       {
         displayName: 'Max',
         name: 'max',
-        type: 'number', //somente númeors
+        type: 'number', //somente números
         default: 100,
         description: 'Número inteiro máximo',
       },
